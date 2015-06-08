@@ -1,0 +1,68 @@
+{% extends 'tyaffiliate/base.html' %}
+
+{% block main %}
+    <div class="row profile">
+        <div class="col-md-3">
+                 <div class="profile-sidebar">
+                     {% for prof in profile %}
+                         <div class="profile-user-pic">
+                            <img src="media/{{ prof.image }}" class="img-responsive" alt="">
+                         </div>
+                         <div class="profile-user-title">
+                            <div class="profile-user-title-name">{{ prof.user.first_name }} {{ prof.user.last_name }}</div>
+                         </div>
+                         <div class="profile-user-menu">
+                            <ul class="nav">
+                                <li><i class="fa fa-user"></i>{{ prof.user.email }}</li>
+                                <li><i class="fa fa-clock-o"></i>{{ prof.user.date_joined}}</li>
+                            </ul>
+                         </div>
+                     {% endfor %}
+                 </div>
+             </div>
+        <div class="col-md-9" id="account-data">
+            <div class="row">
+                {% for data in pages %}
+                    <div class="col-sm-6 col-xs-6" id="page-data">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="well well-sm">
+                                    <div class="media">
+                                        <div class="thumbnail pull-left">
+                                            <img class="media-object" src="media/{{ data.image }}" />
+                                        </div>
+                                        <div class="media-body">
+                                            <h5 class="media-heading">{{ data.page_name }}</h5>
+                                            <p>
+                                                <span class="label label-info" id="likes">
+                                                    <i class='fa fa-spinner fa-pulse'></i>&nbsp;&nbsp;<span>Loading</span>
+                                                </span>&nbsp;&nbsp;
+                                                <span class="label label-primary" id="talking-about">
+                                                    <i class='fa fa-spinner fa-pulse'></i>&nbsp;&nbsp;<span>Loading</span>
+                                                </span>
+                                            </p>
+                                            <p>
+                                                <a class="btn btn-xs btn-default" href="{% url "published" data.page_id %}" id="view">
+                                                    <i class="fa fa-eye"></i>&nbsp;&nbsp;View
+                                                </a>&nbsp;&nbsp;
+                                                <button type="submit" value="{{ data.page_id }}" class="btn btn-xs btn-default" formaction="sync_data" formmethod="post" id="sync-button">
+                                                    {% csrf_token %}
+                                                    <i class="fa fa-refresh"></i>&nbsp;&nbsp;Sync
+                                                </button>
+                                            </p>
+                                        </div>
+                                        <div id="sync-message"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% if forloop.counter|divisibleby:2 %}
+                </div>
+                <div class="row">
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

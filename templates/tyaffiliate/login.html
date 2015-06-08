@@ -1,0 +1,29 @@
+{% extends 'tyaffiliate/base.html' %}
+
+{% block main %}
+    <div class="container">
+        {% if message %}
+            {% for msg in message %}
+                <div class="row errors">
+                    <div class="col-sm-12">
+                        <div class="alert alert-{{ msg.tag }}" role="alert">{{ msg.msg }}</div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <form class="form-signin">
+            <h3 class="heading-desc">Login to Your Account</h3>
+
+            <div class="social-box">
+                <div class="row mg-btm">
+                    <div class="col-md-12">
+                        <a href="{% url "social:begin" "facebook" %}?next={{ request.path }}" class="btn btn-block btn-social btn-lg btn-facebook">
+                            <i class="fa fa-facebook"></i>Sign in with Facebook
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+{% endblock %}
